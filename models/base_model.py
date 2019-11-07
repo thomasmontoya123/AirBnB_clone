@@ -22,11 +22,14 @@ class BaseModel:
         self.updated_at = datetime.now()
 
         if args_len == 0:
+            format_date = '%Y-%m-%d %H:%M:%S.%f'
             for key, value in kwargs.items():
                 if key == "created_at":
-                    setattr(self, key, datetime.fromisoformat(value))
+                    value = value.replace('T', ' ')
+                    setattr(self, key, datetime.strptime(value, format_date))
                 elif key == "updated_at":
-                    setattr(self, key, datetime.fromisoformat(value))
+                    value = value.replace('T', ' ')
+                    setattr(self, key, datetime.strptime(value, format_date))
                 elif key == "__class__":
                     continue
                 else:
