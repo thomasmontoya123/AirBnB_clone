@@ -4,6 +4,7 @@ Base model module
 '''
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -20,6 +21,7 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        storage.new(self)
 
         if args_len == 0:
             format_date = '%Y-%m-%d %H:%M:%S.%f'
@@ -41,6 +43,8 @@ class BaseModel:
 
     def save(self):
         self.update_at = datetime.now()
+        self.update_at = datetime.isoformat(self.update_at)
+        storage.save()
 
     def to_dict(self):
         dict_to_return = self.__dict__
