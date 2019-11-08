@@ -3,11 +3,9 @@
 Console module, contains the entry point of the command interpreter
 '''
 import cmd
-<<<<<<< HEAD
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-=======
->>>>>>> e463916b8ed6643601307961fdbd6f4b7ee497b7
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -27,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         pass
 
-<<<<<<< HEAD
     def do_create(self, line):
         '''Creates a new instance of BaseModel, saves it (to the JSON file)'''
         if len(line) < 2:
