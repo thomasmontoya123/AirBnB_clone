@@ -23,7 +23,7 @@ class FileStorage():
         '''
         Sets in __objects the obj with key <obj class name>.id
         '''
-        new_directory = obj.__dict__
+        new_directory = obj.__dict__.copy()
         new_directory["created_at"] = datetime.isoformat(new_directory["created_at"])
         new_directory["updated_at"] = datetime.isoformat(new_directory["updated_at"])
         self.__objects["{}.{}".format(type(obj).__name__, obj.id)] = new_directory   
