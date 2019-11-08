@@ -4,6 +4,23 @@ Base model module
 '''
 import uuid
 from datetime import datetime
+from models import storage
+
+
+def isotime(datestring):
+    '''
+    isotime function
+    '''
+    datestring = str(datestring)
+    return datestring.replace('T', " ")
+
+
+def fromisoformat(datestring):
+    '''
+    fromisoformat function
+    '''
+    format_date = '%Y-%m-%d %H:%M:%S.%f'
+    return datetime.strptime(isotime(datestring), format_date)
 
 
 class BaseModel:
@@ -20,16 +37,14 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        storage.new(self)
 
         if args_len == 0:
-            format_date = '%Y-%m-%d %H:%M:%S.%f'
             for key, value in kwargs.items():
                 if key == "created_at":
-                    value = value.replace('T', ' ')
-                    setattr(self, key, datetime.strptime(value, format_date))
+                    setattr(self, key, fromisoformat(value))
                 elif key == "updated_at":
-                    value = value.replace('T', ' ')
-                    setattr(self, key, datetime.strptime(value, format_date))
+                    setattr(self, key, fromisoformat(value))
                 elif key == "__class__":
                     continue
                 else:
@@ -41,6 +56,8 @@ class BaseModel:
 
     def save(self):
         self.update_at = datetime.now()
+        self.update_at = datetime.isoformat(self.update_at)
+        storage.save()
 
     def to_dict(self):
         dict_to_return = self.__dict__
