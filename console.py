@@ -7,7 +7,6 @@ from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
-
 class HBNBCommand(cmd.Cmd):
     '''
     Console class, containing console methods and attrs
@@ -53,3 +52,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, class_name, id):
         '''Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file) '''
         pass
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
