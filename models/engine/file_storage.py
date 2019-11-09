@@ -3,7 +3,8 @@
 File storage module
 '''
 import json
-from datetime import datetime
+from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -23,26 +24,28 @@ class FileStorage():
         '''
         Sets in __objects the obj with key <obj class name>.id
         '''
-        new_directory = obj.__dict__.copy()
-        new_directory["created_at"] = datetime.isoformat(new_directory["created_at"])
-        new_directory["updated_at"] = datetime.isoformat(new_directory["updated_at"])
-        self.__objects["{}.{}".format(type(obj).__name__, obj.id)] = new_directory   
+        if obj:
+            keyid = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[keyid] = obj
 
     def save(self):
         '''
         Serializes __objects to the JSON file (path: __file_path)
         '''
-        with open(self.__file_path, "w", encoding='utf-8') as f:
-            opened = self.__objects
-            f.write(json.dumps(opened))
+        my_dict = {}
+        for key, value in self.__objects.items():
+            my_dict[key] = value.to_dict()
+        with open(self.__file_path, "w", encoding='UTF-8') as f:
+            json.dump(my_dict, f)
 
     def reload(self):
         '''
         Deserializes the JSON file to __objects (only if the JSON file (__file_path) exists
         '''
         try:
-            with open(self.__file_path,  encoding='utf-8') as f:
-                readed = f.read()
-                self.__objects = json.loads(readed)
+            with open(self.__file_path, 'r', encoding='UTF-8') as f:
+                for key, value in (json.load(f)).items():         
+                    value = eval(value["__class__"])(**value)
+                    self.__objects[key] = value
         except Exception:
             pass
