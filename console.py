@@ -11,6 +11,9 @@ from models.__init__ import storage
 import json
 from datetime import datetime
 
+allowed_classes = ["BaseModel", "User"]
+
+
 class HBNBCommand(cmd.Cmd):
     '''
     Console class, containing console methods and attrs
@@ -29,124 +32,146 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, input_line):
-        '''Creates a new instance of BaseModel, saves it (to the JSON file)'''
-        splited_line = input_line.split()
-        splited_line_len = len(splited_line)
-        if splited_line_len < 1:
+        '''Creates a new instance of an allowed Class and
+        saves it (to the file.JSON file)'''
+
+        splited_input = input_line.split()
+        splited_input_len = len(splited_input)
+
+        if splited_input_len < 1:
             print("** class name missing **")
             return
+
         else:
-            imported_classes = [value[0] for value in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
-            if splited_line[0] in imported_classes:
-                new_instance = eval(splited_line[0] + "()")
+            if splited_input[0] in allowed_classes:
+                new_instance = eval(splited_input[0] + "()")
                 print((new_instance.__dict__)["id"])
                 new_instance.save()
             else:
                 print("** class doesn't exist **")
 
     def do_show(self, input_line):
-        '''Prints the string representation of an instance based on the class name and id'''
-        splited_line = input_line.split()
-        splited_line_len = len(splited_line)
-        if splited_line_len < 1:
+        '''Prints the string representation of
+        an instance based on the class name and id'''
+
+        splited_input = input_line.split()
+        splited_input_len = len(splited_input)
+
+        if splited_input_len < 1:
             print("** class name missing **")
             return
-        imported_classes = [value[0] for value in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
-        if splited_line[0] not in imported_classes:
+
+        if splited_input[0] not in allowed_classes:
             print("** class doesn't exist **")
             return
-        if splited_line_len < 2:
+
+        if splited_input_len < 2:
             print("** instance id missing **")
             return
+
         instances = storage.all()
-        for single_instance in instances:
-            getting_id = single_instance.split(".")
-            if splited_line[1] == getting_id[1]:
-                print(instances[single_instance])
-                break
-            else:
-                print("** no instance found **")
-                break
+        obj_reference = splited_input[0] + "." + splited_input[1]
+
+        if obj_reference in instances.keys():
+            print(instances[obj_reference])
+        else:
+            print("** no instance found **")
 
     def do_destroy(self, input_line):
-        '''Deletes an instance based on the class name and id (save the change into the JSON file'''
-        splited_line = input_line.split()
-        splited_line_len = len(splited_line)
-        if splited_line_len < 1:
+        '''Deletes an instance based on the class
+        name and id (save the change into the JSON file'''
+
+        splited_input = input_line.split()
+        splited_input_len = len(splited_input)
+        if splited_input_len < 1:
             print("** class name missing **")
             return
-        imported_classes = [value[0] for value in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
-        if splited_line[0] not in imported_classes:
+
+        if splited_input[0] not in allowed_classes:
             print("** class doesn't exist **")
             return
-        if splited_line_len < 2:
+
+        if splited_input_len < 2:
             print("** instance id missing **")
             return
+
         instances = storage.all()
-        for single_instance in instances:
-            getting_id = single_instance.split(".")
-            if splited_line[1] == getting_id[1]:
-                del instances[single_instance]
-                storage.save()
-                break
-            else:
-                print("** no instance found **")
-                break
+        obj_reference = splited_input[0] + "." + splited_input[1]
+
+        if obj_reference in instances.keys():
+            del instances[obj_reference]
+            storage.save()
+        else:
+            print("** no instance found **")
 
     def do_all(self, input_line):
-        '''Prints all string representation of all instances based or not on the class name.'''
-        splited_line = input_line.split()
-        splited_line_len = len(splited_line)
-        if splited_line_len < 1:
+        '''Prints all string representation of
+        all instances based or not on the class name.'''
+
+        splited_input = input_line.split()
+        splited_input_len = len(splited_input)
+
+        if splited_input_len < 1:
             print("** class name missing **")
             return
-        imported_classes = [value[0] for value in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
-        if splited_line[0] not in imported_classes:
+
+        if splited_input[0] not in allowed_classes:
             print("** class doesn't exist **")
             return
+
         else:
             instances = storage.all()
             instances_list = []
+
             for single_instance in instances:
                 instances_list.append(instances[single_instance])
             print(instances_list)
 
     def do_update(self, input_line):
-        '''Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file), only one attribute at a time '''
-        splited_line = input_line.split()
-        splited_line_len = len(splited_line)
-        if splited_line_len < 1:
+        '''Updates an instance based on the class name
+        and id by adding or updating attribute
+        (save the change into the JSON file),
+        only one attribute at a time '''
+
+        splited_input = input_line.split()
+        splited_input_len = len(splited_input)
+
+        if splited_input_len < 1:
             print("** class name missing **")
             return
-        imported_classes = [value[0] for value in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
-        if splited_line[0] not in imported_classes:
+
+        if splited_input[0] not in allowed_classes:
             print("** class doesn't exist **")
             return
-        if splited_line_len < 2:
+
+        if splited_input_len < 2:
             print("** instance id missing **")
             return
+
         instances = storage.all()
-        if instances == {}:
-            return
-        for single_instance in instances:
-            getting_id = single_instance.split(".")
-        if splited_line[1] == getting_id[1]:
-            obj_reference = splited_line[0] + "." + splited_line[1]
+        obj_reference = splited_input[0] + "." + splited_input[1]
+
+        if obj_reference in instances.keys():
             single_instance = instances[obj_reference]
             cant_update_attributes = ["id", "created_at", "updated_at"]
-            if obj_reference in instances.keys():
-                if splited_line_len < 3:
-                    print("** attribute name missing **")
-                elif splited_line_len < 4:
-                    print("** value missing **")
-                elif splited_line[2] in cant_update_attributes:
-                    return
-                else:
-                    single_instance.__dict__[splited_line[2]] = splited_line[3]
-                    single_instance.updated_at = datetime.now()
-                    storage.save()
+            if splited_input_len < 3:
+                print("** attribute name missing **")
+                return
+
+            elif splited_input_len < 4:
+                print("** value missing **")
+                return
+
+            elif splited_input[2] in cant_update_attributes:
+                return
+
+            else:
+                single_instance.__dict__[splited_input[2]] = splited_input[3]
+                single_instance.updated_at = datetime.now()
+                storage.save()
         else:
             print("** no instance found **")
+            return
 
 
 if __name__ == '__main__':
