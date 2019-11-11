@@ -5,11 +5,10 @@ Console module, contains the entry point of the command interpreter
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-import sys
-import inspect
 from models.__init__ import storage
 import json
 from datetime import datetime
+from models.user import User
 
 allowed_classes = ["BaseModel", "User"]
 
