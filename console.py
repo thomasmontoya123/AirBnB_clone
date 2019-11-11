@@ -15,7 +15,8 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-allowed_classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+allowed_classes = ["BaseModel", "User", "State", "City",
+                   "Amenity", "Place", "Review"]
 
 
 class HBNBCommand(cmd.Cmd):
@@ -127,8 +128,9 @@ class HBNBCommand(cmd.Cmd):
             instances = storage.all()
             instances_list = []
 
-            for single_instance in instances:
-                instances_list.append(instances[single_instance])
+            for single_instance in instances.keys():
+                if single_instance.split('.')[0] == splited_input[0]:
+                    instances_list.append(instances[single_instance])
             print(instances_list)
 
     def do_update(self, input_line):
