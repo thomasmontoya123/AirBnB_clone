@@ -2,6 +2,7 @@
 '''test for console'''
 import unittest
 import pep8
+import console
 from console import HBNBCommand
 
 class TestConsole(unittest.TestCase):
@@ -19,7 +20,12 @@ class TestConsole(unittest.TestCase):
 
     def test_docstrings_in_console(self):
         '''test docstrings console.py'''
-        pass
+        self.assertIsNotNone(console.__doc__)
+        array = ["emptyline", "do_quit", "do_EOF", "do_create",
+                 "do_show", "do_destroy", "do_all", "do_update",
+                 "default"]
+        for i in array:
+            self.assertIsNotNone(eval("HBNBCommand."+i+".__doc__"))
 
     def test_quit(self):
         '''test quit command input'''
