@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''test for console'''
 import unittest
-
+from console import HBNBCommand
 
 class TestConsole(unittest.TestCase):
     @classmethod
