@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''test for console'''
 import unittest
+import pep8
 from console import HBNBCommand
 
 class TestConsole(unittest.TestCase):
@@ -11,7 +12,10 @@ class TestConsole(unittest.TestCase):
     
     def test_pep8_console(self):
         '''test pep8 console.py'''
-        pass
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['console.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_docstrings_in_console(self):
         '''test docstrings console.py'''
@@ -39,6 +43,4 @@ class TestConsole(unittest.TestCase):
 
     def test_emptyline(self):
         '''test empty line input'''
-        pass
-
-    
+        pass 
