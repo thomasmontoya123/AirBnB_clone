@@ -7,7 +7,6 @@ import models
 from datetime import datetime
 
 
-
 def isotime(datestring):
     '''
     isotime function
@@ -49,7 +48,7 @@ class BaseModel:
     def __str__(self):
         return "[{}] ({}) {}".format(type(self).__name__,
                                      self.id, self.__dict__)
-    
+
     def __repr__(self):
         '''return a string representation'''
         return self.__str__()
