@@ -81,9 +81,41 @@ class TestConsole(unittest.TestCase):
 
     def test_update(self):
         '''test update command input''' 
+        array_strings = ["** class name missing **","** class doesn't exist **",
+        "** instance id missing **", "** no instance found **", "** attribute name missing **"
+        "** value missing **"]
+
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("update")
-        pass
+            self.assertEqual(array_strings[0]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update NotExistThisClass")
+            self.assertEqual(array_strings[1]+'\n', f.getvalue())
+
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update User")
+            self.assertEqual(array_strings[2]+'\n', f.getvalue())
+
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update User 12345")
+            self.assertEqual(array_strings[3]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("all User")
+            obj = f.getvalue()
+        
+        my_id = obj[obj.find('(')+1:obj.find(')')]
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update User " + my_id)
+            self.assertEqual(array_strings[4]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertEqual(array_strings[5]+'\n', f.getvalue())
+            self.consol.onecmd("update User " + my_id + " Name")
 
     def test_emptyline(self):
         '''test empty line input'''
