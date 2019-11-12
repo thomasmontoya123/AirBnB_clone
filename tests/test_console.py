@@ -81,8 +81,8 @@ class TestConsole(unittest.TestCase):
 
     def test_update(self):
         '''test update command input''' 
-        array_strings = ["** class name missing **","** class doesn't exist **",
-        "** instance id missing **", "** no instance found **", "** attribute name missing **"
+        array_strings = ["** class name missing **", "** class doesn't exist **",
+        "** instance id missing **", "** no instance found **", "** attribute name missing **",
         "** value missing **"]
 
         with patch('sys.stdout', new=StringIO()) as f:
@@ -114,8 +114,8 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(array_strings[4]+'\n', f.getvalue())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertEqual(array_strings[5]+'\n', f.getvalue())
             self.consol.onecmd("update User " + my_id + " Name")
+            self.assertEqual(array_strings[5]+'\n', f.getvalue())
 
     def test_emptyline(self):
         '''test empty line input'''
