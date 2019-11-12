@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
 
             for single_instance in instances.keys():
                 if single_instance.split('.')[0] == splited_input[0]:
-                    instances_list.append(instances[single_instance])
+                    instances_list.append(instances[single_instance].__str__())
 
             if flag is True:
                 print(instances_list)
@@ -213,6 +213,41 @@ class HBNBCommand(cmd.Cmd):
             argument_to_pass = splited_input[0] + " " + id_from_input_line
             HBNBCommand.do_destroy(self, argument_to_pass)
             return
+
+        elif ("update") in splited_input[1]:
+            '''After the fisrst dot'''
+            args_from_input_line = splited_input[1].split('(')
+            args_from_input_line = args_from_input_line[1][1:-2]
+            argument_to_pass = splited_input[0] + " " + args_from_input_line
+            '''clean the line removing unncesary signs'''
+            argument_to_pass = argument_to_pass.replace(',', "")
+            argument_to_pass = argument_to_pass.replace('"', "")
+            '''check if we have a dir in the line'''
+            dict_checker = args_from_input_line.split(',')
+            '''just the object id'''
+            object_id = dict_checker[0].replace('"', "")
+            if "{" in dict_checker[1]:
+                '''get everithing inside the dir '''
+                dict_to_pass = dict_checker[1:]
+                index = 0
+                for i in range(len(dict_to_pass)):
+                    argumen_from_dict = dict_to_pass[index]
+                    argumen_from_dict = argumen_from_dict.replace("{", "")
+                    argumen_from_dict = argumen_from_dict.replace("'", "")
+                    argumen_from_dict = argumen_from_dict.replace('"', "")
+                    argumen_from_dict = argumen_from_dict.replace(":", "")
+                    '''clean the keys and the values'''
+                    argumen_from_dict = (splited_input[0] + " " +
+                                         object_id + argumen_from_dict)
+                    '''join all the line to give to the function,
+                    Class Id key value'''
+                    HBNBCommand.do_update(self, argumen_from_dict)
+                    index += 1
+            else:
+                HBNBCommand.do_update(self, argument_to_pass)
+
+        elif ("{}") in splited_input[1]:
+            print("yes")
 
         else:
             print("*** Unknown syntax: {}".format(input_line))
