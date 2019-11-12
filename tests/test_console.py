@@ -4,6 +4,9 @@ import unittest
 import pep8
 import console
 from console import HBNBCommand
+from io import StringIO
+from unittest.mock import patch
+
 
 class TestConsole(unittest.TestCase):
     @classmethod
@@ -29,24 +32,45 @@ class TestConsole(unittest.TestCase):
 
     def test_quit(self):
         '''test quit command input'''
-        pass
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("quit")
+            self.assertEqual('', f.getvalue())
 
     def test_create(self):
         '''test create command input'''
-        pass
-
+        array_strings = ["** class name missing **", "** class doesn't exist **"]
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create")
+            self.assertEqual(array_strings[0]+'\n', f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create NotexistThisClass")
+            self.assertEqual(array_strings[1]+'\n', f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create User")
+        with patch('sys.stdout', new=StringIO()) as f:
+            print(self.consol.onecmd("all User"))
+            self.assertEqual("[User]", f.getvalue()[2:8])
+    
     def test_destroy(self):
         '''test destroy command input'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("destroy")
         pass
 
     def test_all(self):
         '''test all command input'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("all")
         pass
 
     def test_update(self):
-        '''test update command input'''
+        '''test update command input''' 
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update")
         pass
 
     def test_emptyline(self):
         '''test empty line input'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('\n')
         pass 
