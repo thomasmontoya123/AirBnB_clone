@@ -13,7 +13,7 @@ class TestConsole(unittest.TestCase):
     def setUpClass(cls):
         '''setup for the test'''
         cls.consol = HBNBCommand()
-    
+
     def test_pep8_console(self):
         '''test pep8 console.py'''
         pep8style = pep8.StyleGuide(quiet=True)
@@ -38,7 +38,8 @@ class TestConsole(unittest.TestCase):
 
     def test_create(self):
         '''test create command input'''
-        array_strings = ["** class name missing **", "** class doesn't exist **"]
+        array_strings = ["** class name missing **",
+                         "** class doesn't exist **"]
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create")
             self.assertEqual(array_strings[0]+'\n', f.getvalue())
@@ -50,11 +51,13 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             print(self.consol.onecmd("all User"))
             self.assertEqual("[User]", f.getvalue()[2:8])
-    
+
     def test_destroy(self):
         '''test destroy command input'''
-        array_strings = ["** class name missing **", "** class doesn't exist **",
-                         "** instance id missing **", "** no instance found **"]
+        array_strings = ["** class name missing **",
+                         "** class doesn't exist **",
+                         "** instance id missing **",
+                         "** no instance found **"]
 
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("destroy")
@@ -67,7 +70,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(array_strings[2]+'\n', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("destroy BaseModel 12345")
-            self.assertEqual(array_strings[3]+'\n', f.getvalue())          
+            self.assertEqual(array_strings[3]+'\n', f.getvalue())
 
     def test_all(self):
         array_strings = ["** class doesn't exist **", "[]"]
@@ -80,10 +83,13 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(array_strings[1]+'\n', f.getvalue())
 
     def test_update(self):
-        '''test update command input''' 
-        array_strings = ["** class name missing **", "** class doesn't exist **",
-        "** instance id missing **", "** no instance found **", "** attribute name missing **",
-        "** value missing **"]
+        '''test update command input'''
+        array_strings = ["** class name missing **",
+                         "** class doesn't exist **",
+                         "** instance id missing **",
+                         "** no instance found **",
+                         "** attribute name missing **",
+                         "** value missing **"]
 
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("update")
@@ -93,11 +99,9 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("update NotExistThisClass")
             self.assertEqual(array_strings[1]+'\n', f.getvalue())
 
-
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("update User")
             self.assertEqual(array_strings[2]+'\n', f.getvalue())
-
 
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("update User 12345")
@@ -106,7 +110,7 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             obj = f.getvalue()
-        
+
         my_id = obj[obj.find('(')+1:obj.find(')')]
 
         with patch('sys.stdout', new=StringIO()) as f:
@@ -121,4 +125,4 @@ class TestConsole(unittest.TestCase):
         '''test empty line input'''
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd('\n')
-        pass 
+            self.assertEqual('', f.getvalue())
