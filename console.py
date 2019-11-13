@@ -182,6 +182,7 @@ class HBNBCommand(cmd.Cmd):
                 single_instance.__dict__[splited_input[2]] = new_value
                 single_instance.updated_at = datetime.now()
                 storage.save()
+                return
         else:
             print("** no instance found **")
             return
@@ -247,12 +248,11 @@ class HBNBCommand(cmd.Cmd):
                     index += 1
             else:
                 HBNBCommand.do_update(self, argument_to_pass)
-
-        elif ("{}") in splited_input[1]:
-            print("yes")
+                return
 
         else:
             print("*** Unknown syntax: {}".format(input_line))
+            return
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
