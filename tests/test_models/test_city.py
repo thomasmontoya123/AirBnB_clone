@@ -4,9 +4,12 @@ import unittest
 
 
 class TestCity(unittest.TestCase):
+    
+    @classmethod
     def setUpClass(cls):
         pass
-
+    
+    @classmethod
     def teardown(cls):
         pass
 
@@ -33,3 +36,6 @@ class TestCity(unittest.TestCase):
 
     def test_to_dict_City(self):
         pass
+
+if __name__ == "__main__":
+    unittest.main()

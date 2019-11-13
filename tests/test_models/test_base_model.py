@@ -4,10 +4,10 @@ import unittest
 
 
 class TestBaseModel(unittest.TestCase):
-
+    @classmethod
     def setUpClass(cls):
         pass
-
+    @classmethod
     def teardown(cls):
         pass
 
@@ -31,3 +31,6 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_BaseModel(self):
         pass
+
+if __name__ == "__main__":
+    unittest.main()

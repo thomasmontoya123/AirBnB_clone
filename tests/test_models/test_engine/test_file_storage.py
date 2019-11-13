@@ -3,11 +3,13 @@
 import unittest
 
 
-class TestFileStorage():
-
+class TestFileStorage(unittest.TestCase):
+    
+    @classmethod
     def setUpClass(cls):
         pass
-
+    
+    @classmethod
     def teardown(cls):
         pass
 
@@ -25,3 +27,6 @@ class TestFileStorage():
 
     def test_reload_filestorage(self):
         pass
+
+if __name__ == "__main__":
+    unittest.main()

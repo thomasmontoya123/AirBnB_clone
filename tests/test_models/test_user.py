@@ -5,9 +5,11 @@ import unittest
 
 class TestUser(unittest.TestCase):
 
+    @classmethod
     def setUpClass(cls):
         pass
 
+    @classmethod
     def teardown(cls):
         pass
 
@@ -31,3 +33,6 @@ class TestUser(unittest.TestCase):
 
     def test_to_dict_User(self):
         pass
+
+if __name__ == "__main__":
+    unittest.main()
