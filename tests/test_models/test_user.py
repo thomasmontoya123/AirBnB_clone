@@ -4,7 +4,7 @@ import unittest
 
 
 class TestUser(unittest.TestCase):
-    
+
     def setUpClass(cls):
         pass
 
