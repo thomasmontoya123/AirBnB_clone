@@ -46,6 +46,7 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
+        '''return a string'''
         return "[{}] ({}) {}".format(type(self).__name__,
                                      self.id, self.__dict__)
 
@@ -54,10 +55,12 @@ class BaseModel:
         return self.__str__()
 
     def save(self):
+        '''updates the public instance attribute updated_at to current'''
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
+        '''creates dictionary of the class  and returns'''
         dict_to_return = dict(self.__dict__)
         dict_to_return["__class__"] = str(type(self).__name__)
         dict_to_return["created_at"] = self.created_at.isoformat()
