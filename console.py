@@ -178,7 +178,8 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             else:
-                single_instance.__dict__[splited_input[2]] = splited_input[3]
+                new_value = splited_input[3].replace('"', "")
+                single_instance.__dict__[splited_input[2]] = new_value
                 single_instance.updated_at = datetime.now()
                 storage.save()
         else:
