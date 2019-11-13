@@ -34,7 +34,7 @@ class TestReview(unittest.TestCase):
         '''Tests pep8 style'''
         style = pep8.StyleGuide(quiet=True)
         p = style.check_files(['models/review.py'])
-        self.assertEqual(p.total_errors, 0, 
+        self.assertEqual(p.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_checking_for_docstring_Review(self):
