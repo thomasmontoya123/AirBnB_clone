@@ -11,6 +11,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class FileStorage():
     '''
     Serialization-deserialization
@@ -44,7 +45,8 @@ class FileStorage():
 
     def reload(self):
         '''
-        Deserializes the JSON file to __objects (only if the JSON file (__file_path) exists
+        Deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists
         '''
         try:
             with open(self.__file_path, 'r', encoding='UTF-8') as f:

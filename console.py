@@ -27,13 +27,14 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, input_line):
         '''Quit command to exit the program'''
-        exit()
+        return True
 
     def do_EOF(self, input_line):
         '''EOF close the console'''
         return True
 
     def emptyline(self):
+        '''Empty line'''
         pass
 
     def do_create(self, input_line):
