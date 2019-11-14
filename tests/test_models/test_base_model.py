@@ -68,14 +68,14 @@ class TestBaseModel(unittest.TestCase):
     def test_save_without_args(self):
         '''test save without args'''
         with self.assertRaises(TypeError) as e:
-            self.base.save()
+            BaseModel.save()
         expected = "save() missing 1 required positional argument: 'self'"
         self.assertEqual(str(e.exception), expected)
 
     def test_save_multiple_arguments(self):
         """Test save with more args than expected."""
         with self.assertRaises(TypeError) as e:
-            self.base.save(self, 10)
+            BaseModel.save(self, 10)
         expected = "save() takes 1 positional argument but 2 were given"
         self.assertEqual(str(e.exception), expected)
 
