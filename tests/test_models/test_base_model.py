@@ -58,6 +58,13 @@ class TestBaseModel(unittest.TestCase):
         self.base.save()
         self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
+    def test_to_dict_BaseModel(self):
+        '''test if dictionary works'''
+        base_dict = self.base.to_dict()
+        self.assertEqual(self.base.__class__.__name__, 'BaseModel')
+        self.assertIsInstance(base_dict['created_at'], str)
+        self.assertIsInstance(base_dict['updated_at'], str)
+
     def test_save_without_args(self):
         '''test save without args'''
         with self.assertRaises(TypeError) as e:
@@ -71,13 +78,6 @@ class TestBaseModel(unittest.TestCase):
             self.base.save(self, 10)
         expected = "save() takes 1 positional argument but 2 were given"
         self.assertEqual(str(e.exception), expected)
-
-    def test_to_dict_BaseModel(self):
-        '''test if dictionary works'''
-        base_dict = self.base.to_dict()
-        self.assertEqual(self.base.__class__.__name__, 'BaseModel')
-        self.assertIsInstance(base_dict['created_at'], str)
-        self.assertIsInstance(base_dict['updated_at'], str)
 
 
 if __name__ == "__main__":
