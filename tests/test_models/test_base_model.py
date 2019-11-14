@@ -79,6 +79,12 @@ class TestBaseModel(unittest.TestCase):
         expected = "save() takes 1 positional argument but 2 were given"
         self.assertEqual(str(e.exception), expected)
 
+    def test_save_updated_at(self):
+        '''Check updated_at changes'''
+        instance = BaseModel()
+        holder = instance.updated_at
+        instance.save()
+        self.assertNotEqual(holder, instance.updated_at)
 
 if __name__ == "__main__":
     unittest.main()
