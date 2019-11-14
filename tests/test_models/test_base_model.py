@@ -53,7 +53,7 @@ class TestBaseModel(unittest.TestCase):
         '''test if the base is an type BaseModel'''
         self.assertTrue(isinstance(self.base, BaseModel))
 
-    def test_save_BaesModel(self):
+    def test_save_BaseModel(self):
         '''test if the save works'''
         self.base.save()
         self.assertNotEqual(self.base.created_at, self.base.updated_at)
@@ -64,21 +64,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(self.base.__class__.__name__, 'BaseModel')
         self.assertIsInstance(base_dict['created_at'], str)
         self.assertIsInstance(base_dict['updated_at'], str)
-
-    def test_save_without_args(self):
-        '''test save without args'''
-        with self.assertRaises(TypeError) as e:
-            self.base.save()
-        expected = "save() missing 1 required positional argument: 'self'"
-        self.assertEqual(str(e.exception), expected)
-
-    def test_save_multiple_arguments(self):
-        """Test save with more args than expected."""
-        with self.assertRaises(TypeError) as e:
-            self.base.save(self, 10)
-        expected = "save() takes 1 positional argument but 2 were given"
-        self.assertEqual(str(e.exception), expected)
-
 
 if __name__ == "__main__":
     unittest.main()
