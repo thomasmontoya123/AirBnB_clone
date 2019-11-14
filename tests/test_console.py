@@ -72,17 +72,12 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("destroy BaseModel 12345")
             self.assertEqual(array_strings[3]+'\n', f.getvalue())
 
-    '''
     def test_all(self):
         array_strings = ["** class doesn't exist **", "[]"]
-        test all command input
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("all NotExistThisClass")
-            self.assertEqual(array_strings[0]+'\n', f.getvalue())
+        '''test all command input'''
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all City")
             self.assertEqual(array_strings[1]+'\n', f.getvalue())
-    '''
 
     def test_update(self):
         '''test update command input'''
@@ -128,24 +123,6 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd('\n')
             self.assertEqual('', f.getvalue())
-
-    def tes_wrong_command(self):
-        '''Test command not immplented'''
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("command")
-        stdout = f.getvalue().strip()
-        expetcted = "*** Unknown syntax: command"
-        self.assertIn(expetcted, stdout)
-
-    def test_help_tester(self):
-        ''' test help '''
-        expected = ("Documented commands (type help <topic>):\n"
-                    "========================================\n"
-                    "EOF  all  create  destroy  help  quit  show  update\n")
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help")
-        stdout = f.getvalue()
-        self.assertIn(expected, stdout)
 
 if __name__ == "__main__":
     unittest.main()
