@@ -53,6 +53,11 @@ EOF  help  quit
 (hbnb) 
 $
 ```
+
+## UML:
+<img align="center" src="https://i.imgur.com/jSAcEDl.png" width="100%"/>
+
+
 Authors:
 * **Thomas Montoya** - *Initial Work and Documentación* - [Thomasmontoya123](https://github.com/thomasmontoya123)
 * **Jonathan Cardenas** - *Initial Work and Documentación* - [guxal](https://github.com/guxal)
