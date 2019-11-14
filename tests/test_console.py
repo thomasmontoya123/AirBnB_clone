@@ -127,5 +127,45 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd('\n')
             self.assertEqual('', f.getvalue())
 
+    def tes_wrong_command(self):
+        '''Test command not immplented'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("command")
+        stdout = f.getvalue().strip()
+        expetcted = "*** Unknown syntax: command"
+        self.assertIn(expetcted, stdout)
+
+    def test_help_tester(self):
+        ''' test help '''
+        expected = ("Documented commands (type help <topic>):\n"
+                    "========================================\n"
+                    "EOF  all  create  destroy  help  quit  show  update\n")
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+        stdout = f.getvalue()
+        self.assertIn(expected, stdout)
+
+    def test_show(self):
+        '''Test the show function'''
+        array_strings = ["** class name missing **",
+                         "** class doesn't exist **",
+                         "** instance id missing **",
+                         "** no instance found **"]
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("show")
+            self.assertEqual(array_strings[0]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("show NotExistThisClass")
+            self.assertEqual(array_strings[1]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("show User")
+            self.assertEqual(array_strings[2]+'\n', f.getvalue())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("update User 12345")
+            self.assertEqual(array_strings[3]+'\n', f.getvalue)
+
 if __name__ == "__main__":
     unittest.main()
