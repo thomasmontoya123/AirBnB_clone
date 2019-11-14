@@ -18,6 +18,11 @@ Destroy an object
 * Build using python 3.4
 * Pep8 codestyle
 * Tested with unnitest module(Use this command to test: ```sh python3 -m unittest discover tests ```)
+
+## Install:
+ clone this repo https://github.com/thomasmontoya123/AirBnB_clone.git
+ *change the permisions to the console.py file with this command:
+    chmod u+x console.py
 ## Execution:
 work like this in interactive mode:
 
