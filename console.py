@@ -117,11 +117,7 @@ class HBNBCommand(cmd.Cmd):
         splited_input = input_line.split()
         splited_input_len = len(splited_input)
 
-        if splited_input_len < 1:
-            print("** class name missing **")
-            return
-
-        if splited_input[0] not in allowed_classes:
+        if splited_input_len > 0 and splited_input[0] not in allowed_classes:
             print("** class doesn't exist **")
             return
 
@@ -130,8 +126,13 @@ class HBNBCommand(cmd.Cmd):
             instances_list = []
 
             for single_instance in instances.keys():
-                if single_instance.split('.')[0] == splited_input[0]:
+                if splited_input_len == 0:
                     instances_list.append(instances[single_instance].__str__())
+
+                elif splited_input_len > 0:
+                    if single_instance.split('.')[0] == splited_input[0]:
+                        instances_list.append(instances
+                                              [single_instance].__str__())
 
             if flag is True:
                 print(instances_list)
@@ -192,6 +193,10 @@ class HBNBCommand(cmd.Cmd):
         the command prefix is not recognized'''
 
         splited_input = input_line.split('.')
+
+        if len(splited_input) < 2:
+            print("*** Unknown syntax: {}".format(input_line))
+            return
 
         if splited_input[1] == "all()":
             HBNBCommand.do_all(self, splited_input[0], True)
