@@ -72,15 +72,17 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("destroy BaseModel 12345")
             self.assertEqual(array_strings[3]+'\n', f.getvalue())
 
+    '''
     def test_all(self):
         array_strings = ["** class doesn't exist **", "[]"]
-        '''test all command input'''
+        test all command input
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all NotExistThisClass")
             self.assertEqual(array_strings[0]+'\n', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all City")
             self.assertEqual(array_strings[1]+'\n', f.getvalue())
+    '''
 
     def test_update(self):
         '''test update command input'''
@@ -144,28 +146,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("help")
         stdout = f.getvalue()
         self.assertIn(expected, stdout)
-
-    def test_show(self):
-        '''Test the show function'''
-        array_strings = ["** class name missing **",
-                         "** class doesn't exist **",
-                         "** instance id missing **",
-                         "** no instance found **"]
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("show")
-            self.assertEqual(array_strings[0]+'\n', f.getvalue())
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("show NotExistThisClass")
-            self.assertEqual(array_strings[1]+'\n', f.getvalue())
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("show User")
-            self.assertEqual(array_strings[2]+'\n', f.getvalue())
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("update User 12345")
-            self.assertEqual(array_strings[3]+'\n', f.getvalue)
 
 if __name__ == "__main__":
     unittest.main()
