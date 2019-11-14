@@ -76,6 +76,9 @@ class TestConsole(unittest.TestCase):
         array_strings = ["** class doesn't exist **", "[]"]
         '''test all command input'''
         with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("all NotExistThisClass")
+            self.assertEqual(array_strings[0]+'\n', f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all City")
             self.assertEqual(array_strings[1]+'\n', f.getvalue())
 
